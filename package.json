@@ -1,0 +1,72 @@
+{
+  "name": "todo",
+  "version": "0.0.0",
+  "engines": {
+    "node": "^18.19.1 || ^20.11.1 || ^22.0.0"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "vite",
+    "build": "vite build",
+    "watch": "ng build --watch --configuration development",
+    "test": "vitest",
+    "e2e": "ng e2e",
+    "format": "prettier --write .",
+    "lint": "ng lint && npx stylelint \"**/*.scss\"",
+    "prepare": "husky"
+  },
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@analogjs/vite-plugin-angular": "^1.12.0",
+    "@angular/animations": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/forms": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/router": "^19.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@analogjs/platform": "^1.12.0",
+    "@analogjs/vitest-angular": "^1.9.0",
+    "@angular-devkit/build-angular": "^19.0.7",
+    "@angular/cli": "^19.0.7",
+    "@angular/compiler-cli": "^19.0.0",
+    "@eslint/compat": "^1.2.5",
+    "@playwright/test": "1.49.1",
+    "@smarttools/eslint-plugin-rxjs": "^1.0.15",
+    "@types/jasmine": "~5.1.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "angular-eslint": "19.0.2",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-rxjs-angular": "^2.0.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
+    "jsdom": "^26.0.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.3.0",
+    "playwright-ng-schematics": "^1.2.2",
+    "prettier": "^3.4.2",
+    "stylelint": "^16.13.2",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "8.18.0",
+    "vite": "^5.4.11",
+    "vite-plugin-angular": "^0.0.0",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^2.0.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "ng lint --fix",
+      "prettier --write"
+    ]
+  }
+}
