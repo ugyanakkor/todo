@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { Todo } from '../interfaces/todo.interface';
 
 @Injectable({
@@ -7,7 +9,6 @@ import { Todo } from '../interfaces/todo.interface';
 })
 export class TodoService {
   public todos = signal<Array<Todo>>([]);
-  private nextId = 1;
   private todosKey = 'todos'; // Key for localStorage
 
   constructor() {
@@ -18,7 +19,7 @@ export class TodoService {
 
   public addTodo(description: string): void {
     const newTodo: Todo = {
-      id: this.nextId++,
+      id: uuidv4(),
       description,
       completed: false,
     };
@@ -26,13 +27,13 @@ export class TodoService {
     this.saveTodosToLocalStorage(this.todos());
   }
 
-  public toggleTodoStatus(id: number): void {
+  public toggleTodoStatus(id: string): void {
     const todo = this.todos().find(todo => todo.id === id);
     if (todo) todo.completed = !todo.completed;
     this.saveTodosToLocalStorage(this.todos());
   }
 
-  public deleteTodo(id: number): void {
+  public deleteTodo(id: string): void {
     const confirmation = window.confirm('Are you sure you want to delete this todo?');
     if (confirmation) {
       const updatedTodos = this.todos().filter(todo => todo.id !== id);

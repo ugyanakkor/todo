@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 
 export interface Todo {
-  id: number;
+  id: string;
   description: string;
   completed: boolean;
 }
