@@ -65,7 +65,6 @@
   },
   "lint-staged": {
     "*.ts": [
-      "ng lint --fix",
       "prettier --write"
     ]
   }
