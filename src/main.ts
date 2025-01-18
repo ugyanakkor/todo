@@ -1,7 +1,11 @@
 import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
 
+import { appRoutes } from './app.roputes';
 import { AppComponent } from './app/app.component';
 
 import 'zone.js';
 
-bootstrapApplication(AppComponent).catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [provideRouter(appRoutes)],
+}).catch(err => console.error(err));
