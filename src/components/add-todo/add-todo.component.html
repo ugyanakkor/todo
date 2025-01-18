@@ -1,0 +1,8 @@
+<section class="add-todo">
+  <h2>Add a New TODO</h2>
+  <form [formGroup]="form" (ngSubmit)="addTodo()">
+    <label for="description">Description:</label>
+    <textarea id="description" formControlName="description" name="description" required aria-label="Add a TODO description"></textarea>
+    <button class="submit" type="submit" [disabled]="form.invalid">Add TODO</button>
+  </form>
+</section>
