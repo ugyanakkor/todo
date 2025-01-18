@@ -70,7 +70,8 @@ export default tseslint.config(
           ]
         }
       ],
-      "simple-import-sort/exports": "error"
+      "simple-import-sort/exports": "error",
+      "@typescript-eslint/array-type": ["error", {default: "generic"}],
     },
   },
   {
