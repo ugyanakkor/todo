@@ -1,11 +1,11 @@
 import { NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, Signal,signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Signal, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { merge, Observable, tap } from 'rxjs';
 
-import { FilterType, Todo } from '../../interfaces/todo.interface';
+import { FilterForm, FilterFormRawValues, FilterType, Todo } from '../../interfaces/todo.interface';
 import { TodoService } from '../../services/todo.service';
 
 @Component({
@@ -18,33 +18,46 @@ import { TodoService } from '../../services/todo.service';
 })
 export class TodoListComponent {
   filteredTodos: Signal<Array<Todo>> = signal([]);
-  filterControl = new FormControl<FilterType>('all', {
-    nonNullable: true,
+  filterForm = new FormGroup<FilterForm>({
+    statusFilter: new FormControl<FilterType>('all', {
+      nonNullable: true,
+    }),
+    searchFilter: new FormControl<string>('', {
+      nonNullable: true,
+    }),
   });
 
   constructor(protected readonly todoService: TodoService) {
-    const filterChanges$ = this.filterControl.valueChanges as Observable<FilterType>;
     const todosChanges$ = toObservable(this.todoService.todos);
 
-    merge(filterChanges$, todosChanges$)
+    merge(this.filterForm.valueChanges as Observable<FilterFormRawValues>, todosChanges$)
       .pipe(
-        tap(() => this.updateFilteredTodos(this.filterControl.value, this.todoService.todos)),
+        tap(() => this.updateFilteredTodos(this.filterForm.getRawValue(), this.todoService.todos)),
         takeUntilDestroyed(),
       )
       .subscribe();
   }
 
-  private updateFilteredTodos(filter: FilterType, todos: Signal<Array<Todo>>): void {
+  private updateFilteredTodos(formChanges: FilterFormRawValues, todos: Signal<Array<Todo>>): void {
+    let filteredItems: Array<Todo> = [];
+
     this.filteredTodos = computed(() => {
-      switch (filter) {
-        case 'completed':
-          return todos().filter(todo => todo.completed);
-        case 'notCompleted':
-          return todos().filter(todo => !todo.completed);
-        case 'all':
-        default:
-          return todos();
+      if (formChanges.statusFilter === 'completed') {
+        filteredItems = todos().filter(todo => todo.completed);
+      } else if (formChanges.statusFilter === 'notCompleted') {
+        filteredItems = todos().filter(todo => !todo.completed);
+      } else {
+        filteredItems = todos();
       }
+
+      if (formChanges.searchFilter) {
+        filteredItems = filteredItems.filter(todo => {
+          const { searchFilter } = formChanges;
+          return todo.description.toLowerCase().includes(searchFilter.toLowerCase());
+        });
+      }
+
+      return filteredItems;
     });
   }
 }

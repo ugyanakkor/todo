@@ -1,21 +1,21 @@
 <section class="todo-list">
   <h2>TODO List</h2>
 
-  <fieldset class="filters">
-    <legend>Filter todos by status</legend>
+  <form class="filters" [formGroup]="filterForm">
     <label>
-      <input type="radio" name="statusFilter" value="all" [formControl]="filterControl" checked />
+      <input type="radio" name="statusFilter" value="all" [formControl]="filterForm.controls.statusFilter" checked />
       All
     </label>
     <label>
-      <input type="radio" name="statusFilter" value="completed" [formControl]="filterControl" />
+      <input type="radio" name="statusFilter" value="completed" [formControl]="filterForm.controls.statusFilter" />
       Completed
     </label>
     <label>
-      <input type="radio" name="statusFilter" value="notCompleted" [formControl]="filterControl" />
+      <input type="radio" name="statusFilter" value="notCompleted" [formControl]="filterForm.controls.statusFilter" />
       Not Completed
     </label>
-  </fieldset>
+    <input type="text" formControlName="searchFilter" placeholder="Search by description..." />
+  </form>
 
   <ul>
     <li *ngFor="let todo of filteredTodos()">
