@@ -1,0 +1,31 @@
+<section class="todo-list">
+  <h2>TODO List</h2>
+
+  <fieldset class="filters">
+    <legend>Filter todos by status</legend>
+    <label>
+      <input type="radio" name="statusFilter" value="all" [formControl]="filterControl" checked />
+      All
+    </label>
+    <label>
+      <input type="radio" name="statusFilter" value="completed" [formControl]="filterControl" />
+      Completed
+    </label>
+    <label>
+      <input type="radio" name="statusFilter" value="notCompleted" [formControl]="filterControl" />
+      Not Completed
+    </label>
+  </fieldset>
+
+  <ul>
+    <li *ngFor="let todo of filteredTodos()">
+      <div class="todo-item" [class.completed]="todo.completed">
+        {{ todo.description }}
+        <button (click)="todoService.toggleTodoStatus(todo.id)">
+          {{ todo.completed ? 'Undone' : 'Done' }}
+        </button>
+        <button (click)="todoService.deleteTodo(todo.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</section>

@@ -15,7 +15,7 @@ describe('AddTodoComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create todo component', () => {
+  it('should create add todo component', () => {
     expect(component).toBeInstanceOf(AddTodoComponent);
   });
 });

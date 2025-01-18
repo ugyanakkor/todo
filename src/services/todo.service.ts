@@ -6,12 +6,8 @@ import { Todo } from '../interfaces/todo.interface';
   providedIn: 'root',
 })
 export class TodoService {
-  private todos = signal<Array<Todo>>([]);
+  public todos = signal<Array<Todo>>([]);
   private nextId = 1;
-
-  public getTodos(): Array<Todo> {
-    return this.todos();
-  }
 
   public addTodo(description: string): void {
     const newTodo: Todo = {
@@ -20,5 +16,15 @@ export class TodoService {
       completed: false,
     };
     this.todos.update(previousTodoArray => [...previousTodoArray, newTodo]);
+  }
+
+  public toggleTodoStatus(id: number): void {
+    const todo = this.todos().find(todo => todo.id === id);
+    if (todo) todo.completed = !todo.completed;
+  }
+
+  public deleteTodo(id: number): void {
+    const updatedTodos = this.todos().filter(todo => todo.id !== id);
+    this.todos.set(updatedTodos);
   }
 }
