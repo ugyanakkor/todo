@@ -33,8 +33,11 @@ export class TodoService {
   }
 
   public deleteTodo(id: number): void {
-    const updatedTodos = this.todos().filter(todo => todo.id !== id);
-    this.todos.set(updatedTodos);
+    const confirmation = window.confirm('Are you sure you want to delete this todo?');
+    if (confirmation) {
+      const updatedTodos = this.todos().filter(todo => todo.id !== id);
+      this.todos.set(updatedTodos);
+    }
     this.saveTodosToLocalStorage(this.todos());
   }
 
