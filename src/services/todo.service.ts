@@ -42,6 +42,15 @@ export class TodoService {
     this.saveTodosToLocalStorage(this.todos());
   }
 
+  public editTodo(id: string, newDescription: string): void {
+    const todo = this.todos().find(todo => todo.id === id);
+    if (todo) {
+      todo.description = newDescription;
+      this.todos.update(todos => [...todos]); // Trigger signal update
+      this.saveTodosToLocalStorage(this.todos());
+    }
+  }
+
   private saveTodosToLocalStorage(todos: Array<Todo>): void {
     localStorage.setItem(this.todosKey, JSON.stringify(todos));
   }

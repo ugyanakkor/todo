@@ -25,9 +25,25 @@
           <button (click)="todoService.toggleTodoStatus(todo.id)">
             {{ todo.completed ? 'Undone' : 'Done' }}
           </button>
+          <button (click)="openEditModal(todo)">
+            Edit
+          </button>
           <button (click)="todoService.deleteTodo(todo.id)">Delete</button>
         </div>
       </li>
     }
   </ul>
+
+  @if(isModalOpen()) {
+    <dialog class="modal">
+      <article class="modal-content">
+        <h3>Edit Todo</h3>
+        <textarea [formControl]="editedDescription" rows="3"></textarea>
+        <footer class="modal-actions">
+          <button (click)="saveEdit()">Save</button>
+          <button (click)="closeModal()">Cancel</button>
+        </footer>
+      </article>
+    </dialog>
+  }
 </section>

@@ -5,55 +5,55 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f9f9f9;
-}
 
-.add-todo h2 {
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-}
+  h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
 
-.add-todo form {
-  display: flex;
-  flex-direction: column;
-}
+  form {
+    display: flex;
+    flex-direction: column;
 
-.add-todo label {
-  margin-bottom: 4px;
-}
+    label {
+      margin-bottom: 4px;
+    }
 
-.add-todo textarea {
-  height: 100px;
-  margin-bottom: 8px;
-  padding: 8px;
-}
+    textarea {
+      height: 100px;
+      margin-bottom: 8px;
+      padding: 8px;
+    }
 
-.add-todo button {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: auto;
-}
+    button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: auto;
+    }
 
-button:disabled {
-  background-color: #ccc;
-  color: #666;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
+    button:disabled {
+      background-color: #ccc;
+      color: #666;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
 
-button:hover:not(:disabled) {
-  background-color: #0056b3;
-  cursor: pointer;
-}
+    button:hover:not(:disabled) {
+      background-color: #0056b3;
+      cursor: pointer;
+    }
 
-.error {
-  height: 30px;
-  color: red;
-}
+    textarea.is-invalid {
+      border-color: red;
+      outline: none;
+    }
 
-.add-todo textarea.is-invalid {
-  border-color: red;
-  outline: none;
+    .error {
+      height: 30px;
+      color: red;
+    }
+  }
 }
