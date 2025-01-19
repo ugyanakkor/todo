@@ -1,11 +1,11 @@
 import { NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, Signal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { merge, Observable, tap } from 'rxjs';
+import { merge, tap } from 'rxjs';
 
-import { FilterForm, FilterFormRawValues, FilterType, Todo } from '../../interfaces/todo.interface';
+import { FilterForm, FilterType, Todo } from '../../interfaces/todo.interface';
 import { TodoService } from '../../services/todo.service';
 
 @Component({
@@ -14,10 +14,10 @@ import { TodoService } from '../../services/todo.service';
   standalone: true,
   styleUrls: ['./todo-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, NgForOf, ReactiveFormsModule],
+  imports: [NgForOf, ReactiveFormsModule],
 })
 export class TodoListComponent {
-  filteredTodos: Signal<Array<Todo>> = signal([]);
+  filteredTodos = signal<Array<Todo>>([]);
   filterForm = new FormGroup<FilterForm>({
     statusFilter: new FormControl<FilterType>('all', {
       nonNullable: true,
@@ -28,36 +28,30 @@ export class TodoListComponent {
   });
 
   constructor(protected readonly todoService: TodoService) {
-    const todosChanges$ = toObservable(this.todoService.todos);
-
-    merge(this.filterForm.valueChanges as Observable<FilterFormRawValues>, todosChanges$)
+    merge(this.filterForm.valueChanges, toObservable(this.todoService.todos))
       .pipe(
-        tap(() => this.updateFilteredTodos(this.filterForm.getRawValue(), this.todoService.todos)),
+        tap(() => this.updateFilteredTodos()),
         takeUntilDestroyed(),
       )
       .subscribe();
   }
 
-  private updateFilteredTodos(formChanges: FilterFormRawValues, todos: Signal<Array<Todo>>): void {
-    let filteredItems: Array<Todo> = [];
+  private updateFilteredTodos(): void {
+    const { statusFilter, searchFilter} = this.filterForm.getRawValue();
+    let filteredItems = this.todoService.todos();
 
-    this.filteredTodos = computed(() => {
-      if (formChanges.statusFilter === 'completed') {
-        filteredItems = todos().filter(todo => todo.completed);
-      } else if (formChanges.statusFilter === 'notCompleted') {
-        filteredItems = todos().filter(todo => !todo.completed);
-      } else {
-        filteredItems = todos();
-      }
+    if (statusFilter === 'completed') {
+      filteredItems = filteredItems.filter(todo => todo.completed);
+    } else if (statusFilter === 'notCompleted') {
+      filteredItems = filteredItems.filter(todo => !todo.completed);
+    }
 
-      if (formChanges.searchFilter) {
-        filteredItems = filteredItems.filter(todo => {
-          const { searchFilter } = formChanges;
-          return todo.description.toLowerCase().includes(searchFilter.toLowerCase());
-        });
-      }
+    if (searchFilter) {
+      filteredItems = filteredItems.filter(todo =>
+         todo.description.toLowerCase().includes(searchFilter.toLowerCase())
+      );
+    }
 
-      return filteredItems;
-    });
+    this.filteredTodos = signal(filteredItems);
   }
 }

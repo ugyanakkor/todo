@@ -18,14 +18,16 @@
   </form>
 
   <ul>
-    <li *ngFor="let todo of filteredTodos()">
-      <div class="todo-item" [class.completed]="todo.completed">
-        {{ todo.description }}
-        <button (click)="todoService.toggleTodoStatus(todo.id)">
-          {{ todo.completed ? 'Undone' : 'Done' }}
-        </button>
-        <button (click)="todoService.deleteTodo(todo.id)">Delete</button>
-      </div>
-    </li>
+    @for (todo of filteredTodos(); track todo.id) {
+      <li>
+        <div class="todo-item" [class.completed]="todo.completed">
+          {{ todo.description }}
+          <button (click)="todoService.toggleTodoStatus(todo.id)">
+            {{ todo.completed ? 'Undone' : 'Done' }}
+          </button>
+          <button (click)="todoService.deleteTodo(todo.id)">Delete</button>
+        </div>
+      </li>
+    }
   </ul>
 </section>

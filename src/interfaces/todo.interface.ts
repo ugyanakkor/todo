@@ -12,8 +12,3 @@ export interface FilterForm {
   statusFilter: FormControl<string>;
   searchFilter: FormControl<string>;
 }
-
-export interface FilterFormRawValues {
-  statusFilter: string;
-  searchFilter: string;
-}
