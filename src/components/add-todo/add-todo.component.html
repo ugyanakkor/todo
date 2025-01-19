@@ -2,12 +2,14 @@
   <h2>Add a New TODO</h2>
   <form [formGroup]="form" (ngSubmit)="addTodo()">
     <label for="description">Description:</label>
-    <textarea
-      id="description"
-      formControlName="description"
-      name="description"
-      required
-      aria-label="Add a TODO description"></textarea>
+    <textarea id="description" formControlName="description" aria-label="Add a TODO description"
+              [class.is-invalid]="form.controls.description.invalid && form.controls.description.dirty">
+    </textarea>
+    <div class="error">
+    @if(form.controls.description.invalid && form.dirty) {
+      Description must be at least 3 characters long.
+    }
+    </div>
     <button class="submit" type="submit" [disabled]="form.invalid">Add TODO</button>
   </form>
 </section>

@@ -1,7 +1,7 @@
 .add-todo {
   max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
+  margin: 24px auto;
+  padding: 24px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f9f9f9;
@@ -46,4 +46,14 @@ button:disabled {
 button:hover:not(:disabled) {
   background-color: #0056b3;
   cursor: pointer;
+}
+
+.error {
+  height: 30px;
+  color: red;
+}
+
+.add-todo textarea.is-invalid {
+  border-color: red;
+  outline: none;
 }
