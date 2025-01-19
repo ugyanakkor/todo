@@ -19,18 +19,20 @@
 
   <span>Total number of todos: {{todoService.todos().length}}</span>
 
-  <ul>
+  <ul data-testid="todo-list">
     @for (todo of filteredTodos(); track todo.id) {
       <li data-testid="todo-item">
         <div class="todo-item" [class.completed]="todo.completed">
-          {{ todo.description }}
-          <button (click)="todoService.toggleTodoStatus(todo.id)">
+          <span data-testid="description">
+            {{ todo.description }}
+          </span>
+          <button (click)="todoService.toggleTodoStatus(todo.id)" data-testid="completion">
             {{ todo.completed ? 'Undone' : 'Done' }}
           </button>
-          <button (click)="openEditModal(todo)">
+          <button (click)="openEditModal(todo)" data-testid="edit">
             Edit
           </button>
-          <button (click)="todoService.deleteTodo(todo.id)">Delete</button>
+          <button (click)="todoService.deleteTodo(todo.id)" data-testid="delete">Delete</button>
         </div>
       </li>
     }
@@ -48,7 +50,7 @@
         <h3>Edit Todo</h3>
         <textarea [formControl]="editedDescription" rows="3"></textarea>
         <footer class="modal-actions">
-          <button (click)="saveEdit()">Save</button>
+          <button (click)="saveEdit()" data-testid="save">Save</button>
           <button (click)="closeModal()">Cancel</button>
         </footer>
       </article>
