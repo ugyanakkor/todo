@@ -22,7 +22,7 @@ export class AddTodoComponent {
   constructor(private readonly todoService: TodoService) {}
 
   public addTodo(): void {
-    const description = this.form.controls.description.value.trim();
+    const description = this.form.getRawValue().description.trim();
     this.todoService.addTodo(description);
     this.form.reset();
   }
