@@ -17,6 +17,8 @@
     <input type="text" formControlName="searchFilter" placeholder="Search by description..." />
   </form>
 
+  <span>Total number of todos: {{todoService.todos().length}}</span>
+
   <ul>
     @for (todo of filteredTodos(); track todo.id) {
       <li>
