@@ -33,7 +33,7 @@ export class TodoListComponent {
 
   public currentPage = signal<number>(1);
   public totalPages = signal<number>(1);
-  private pageSize = signal<number>(5);
+  private pageSize = signal<number>(25);
 
   constructor(protected readonly todoService: TodoService) {
     merge(this.filterForm.valueChanges, toObservable(this.todoService.todos))
