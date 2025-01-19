@@ -34,6 +34,12 @@
     }
   </ul>
 
+  <footer class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage() === 1">Previous</button>
+    <span>Page {{ currentPage() }} of {{ totalPages() }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">Next</button>
+  </footer>
+
   @if(isModalOpen()) {
     <dialog class="modal">
       <article class="modal-content">

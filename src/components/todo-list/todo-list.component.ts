@@ -31,6 +31,10 @@ export class TodoListComponent {
   public isModalOpen = signal(false);
   private editingTodoId = signal<string>('');
 
+  public currentPage = signal<number>(1);
+  public totalPages = signal<number>(1);
+  private pageSize = signal<number>(5);
+
   constructor(protected readonly todoService: TodoService) {
     merge(this.filterForm.valueChanges, toObservable(this.todoService.todos))
       .pipe(
@@ -59,6 +63,20 @@ export class TodoListComponent {
     this.closeModal();
   }
 
+  public previousPage(): void {
+    if (this.currentPage() > 1) {
+      this.currentPage.update(page => page - 1);
+      this.updateFilteredTodos();
+    }
+  }
+
+  public nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage.update(page => page + 1);
+      this.updateFilteredTodos();
+    }
+  }
+
   private updateFilteredTodos(): void {
     const { statusFilter, searchFilter} = this.filterForm.getRawValue();
     let filteredItems = this.todoService.todos();
@@ -71,10 +89,17 @@ export class TodoListComponent {
 
     if (searchFilter) {
       filteredItems = filteredItems.filter(todo =>
-         todo.description.toLowerCase().includes(searchFilter.toLowerCase())
+        todo.description.toLowerCase().includes(searchFilter.toLowerCase())
       );
     }
 
-    this.filteredTodos = signal(filteredItems);
+    this.totalPages = signal(Math.ceil(filteredItems.length / this.pageSize()));
+    this.filteredTodos = signal(this.getPageData(filteredItems));
+  }
+
+  private getPageData(filteredItems: Array<Todo>): Array<Todo> {
+    const startIndex = (this.currentPage() - 1) * this.pageSize();
+    const endIndex = startIndex + this.pageSize();
+    return filteredItems.slice(startIndex, endIndex);
   }
 }

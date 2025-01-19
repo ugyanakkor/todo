@@ -1,4 +1,7 @@
 {
   "extends": ["stylelint-config-standard"],
-  "ignoreFiles": ["**/*.ts"]
+  "ignoreFiles": ["**/*.ts"],
+  "rules": {
+    "no-descending-specificity": null
+  }
 }
