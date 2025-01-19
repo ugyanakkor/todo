@@ -93,7 +93,7 @@ export class TodoListComponent {
       );
     }
 
-    this.totalPages = signal(Math.ceil(filteredItems.length / this.pageSize()));
+    this.totalPages = signal(Math.ceil(filteredItems.length || 1 / this.pageSize()));
     this.filteredTodos = signal(this.getPageData(filteredItems));
   }
 
