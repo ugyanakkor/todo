@@ -12,7 +12,7 @@ export class TodoService {
   private todosKey = 'todos'; // Key for localStorage
 
   constructor() {
-    /* localstorage at that point when i initialize the todos variable,
+    /* localstorage at that point available when initialize the todos variable,
     it has to be done in this constructor instead of line 9 */
     this.todos = signal<Array<Todo>>(this.getTodosFromLocalStorage());
   }
