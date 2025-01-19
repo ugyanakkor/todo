@@ -41,6 +41,7 @@
     "@eslint/compat": "^1.2.5",
     "@playwright/test": "1.49.1",
     "@smarttools/eslint-plugin-rxjs": "^1.0.15",
+    "@testing-library/angular": "^17.3.5",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/parser": "^8.20.0",
     "angular-eslint": "19.0.2",
