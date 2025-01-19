@@ -21,7 +21,7 @@
 
   <ul>
     @for (todo of filteredTodos(); track todo.id) {
-      <li>
+      <li data-testid="todo-item">
         <div class="todo-item" [class.completed]="todo.completed">
           {{ todo.description }}
           <button (click)="todoService.toggleTodoStatus(todo.id)">
